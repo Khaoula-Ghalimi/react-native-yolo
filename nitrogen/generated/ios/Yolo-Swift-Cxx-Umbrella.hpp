@@ -16,6 +16,7 @@ namespace margelo::nitro::yolo { class HybridYoloSpec; }
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>
+#include <string>
 
 // C++ helpers for Swift
 #include "Yolo-Swift-Cxx-Bridge.hpp"

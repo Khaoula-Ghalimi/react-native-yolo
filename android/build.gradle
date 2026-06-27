@@ -137,6 +137,11 @@ dependencies {
 
   // Add a dependency on NitroModules
   implementation project(":react-native-nitro-modules")
+
+  // Add TensorFlow Lite dependencies
+  implementation "com.google.ai.edge.litert:litert:1.4.2"
+  implementation "com.google.ai.edge.litert:litert-support-api:1.4.2"
+  implementation "com.google.ai.edge.litert:litert-gpu:1.4.2"
 }
 
 if (isNewArchitectureEnabled()) {

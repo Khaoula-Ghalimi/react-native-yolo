@@ -14,6 +14,7 @@ public protocol HybridYoloSpec_protocol: HybridObject {
 
   // Methods
   func sum(num1: Double, num2: Double) throws -> Double
+  func loadModel(modelPath: String) throws -> Void
 }
 
 public extension HybridYoloSpec_protocol {

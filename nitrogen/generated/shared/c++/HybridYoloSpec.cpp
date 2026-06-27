@@ -15,6 +15,7 @@ namespace margelo::nitro::yolo {
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
       prototype.registerHybridMethod("sum", &HybridYoloSpec::sum);
+      prototype.registerHybridMethod("loadModel", &HybridYoloSpec::loadModel);
     });
   }
 

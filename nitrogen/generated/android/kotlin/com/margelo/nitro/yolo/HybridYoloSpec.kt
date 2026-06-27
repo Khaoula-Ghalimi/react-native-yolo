@@ -31,6 +31,10 @@ abstract class HybridYoloSpec: HybridObject() {
   @DoNotStrip
   @Keep
   abstract fun sum(num1: Double, num2: Double): Double
+  
+  @DoNotStrip
+  @Keep
+  abstract fun loadModel(modelPath: String): Unit
 
   // Default implementation of `HybridObject.toString()`
   override fun toString(): String {

@@ -9,7 +9,7 @@
 
 
 
-
+#include <string>
 
 namespace margelo::nitro::yolo {
 
@@ -48,6 +48,10 @@ namespace margelo::nitro::yolo {
     static const auto method = _javaPart->javaClassStatic()->getMethod<double(double /* num1 */, double /* num2 */)>("sum");
     auto __result = method(_javaPart, num1, num2);
     return __result;
+  }
+  void JHybridYoloSpec::loadModel(const std::string& modelPath) {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* modelPath */)>("loadModel");
+    method(_javaPart, jni::make_jstring(modelPath));
   }
 
 } // namespace margelo::nitro::yolo

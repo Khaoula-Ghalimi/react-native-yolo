@@ -135,4 +135,15 @@ open class HybridYoloSpec_cxx {
       return bridge.create_Result_double_(__exceptionPtr)
     }
   }
+  
+  @inline(__always)
+  public final func loadModel(modelPath: std.string) -> bridge.Result_void_ {
+    do {
+      try self.__implementation.loadModel(modelPath: String(modelPath))
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
 }

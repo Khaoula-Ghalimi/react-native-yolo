@@ -55,6 +55,7 @@ namespace margelo::nitro::yolo {
   public:
     // Methods
     double sum(double num1, double num2) override;
+    void loadModel(const std::string& modelPath) override;
 
   private:
     jni::global_ref<JHybridYoloSpec::JavaPart> _javaPart;

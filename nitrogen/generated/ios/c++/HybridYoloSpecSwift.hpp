@@ -14,7 +14,7 @@ namespace Yolo { class HybridYoloSpec_cxx; }
 
 
 
-
+#include <string>
 
 #include "Yolo-Swift-Cxx-Umbrella.hpp"
 
@@ -73,6 +73,12 @@ namespace margelo::nitro::yolo {
       }
       auto __value = std::move(__result.value());
       return __value;
+    }
+    inline void loadModel(const std::string& modelPath) override {
+      auto __result = _swiftPart.loadModel(modelPath);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
 
   private:
