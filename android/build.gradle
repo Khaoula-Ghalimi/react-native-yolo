@@ -142,6 +142,8 @@ dependencies {
   implementation "com.google.ai.edge.litert:litert:1.4.2"
   implementation "com.google.ai.edge.litert:litert-support-api:1.4.2"
   implementation "com.google.ai.edge.litert:litert-gpu:1.4.2"
+  
+  compileOnly project(":react-native-vision-camera")
 }
 
 if (isNewArchitectureEnabled()) {

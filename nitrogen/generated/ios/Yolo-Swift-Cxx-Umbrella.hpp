@@ -8,12 +8,15 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `HybridFrameSpec` to properly resolve imports.
+namespace margelo::nitro::camera { class HybridFrameSpec; }
 // Forward declaration of `HybridYoloSpec` to properly resolve imports.
 namespace margelo::nitro::yolo { class HybridYoloSpec; }
 
 // Include C++ defined types
 #include "HybridYoloSpec.hpp"
 #include <NitroModules/Result.hpp>
+#include <VisionCamera/HybridFrameSpec.hpp>
 #include <exception>
 #include <memory>
 #include <string>
@@ -28,6 +31,8 @@ namespace margelo::nitro::yolo { class HybridYoloSpec; }
 #include <NitroModules/DateToChronoDate.hpp>
 
 // Forward declarations of Swift defined types
+// Forward declaration of `HybridFrameSpec_cxx` to properly resolve imports.
+namespace VisionCamera { class HybridFrameSpec_cxx; }
 // Forward declaration of `HybridYoloSpec_cxx` to properly resolve imports.
 namespace Yolo { class HybridYoloSpec_cxx; }
 

@@ -5,6 +5,7 @@
 /// Copyright © Marc Rousavy @ Margelo
 ///
 
+import VisionCamera
 import NitroModules
 
 /// See ``HybridYoloSpec``
@@ -15,6 +16,7 @@ public protocol HybridYoloSpec_protocol: HybridObject {
   // Methods
   func sum(num1: Double, num2: Double) throws -> Double
   func loadModel(modelPath: String) throws -> Void
+  func frameToBase64(frame: (any HybridFrameSpec)) throws -> String
 }
 
 public extension HybridYoloSpec_protocol {

@@ -56,6 +56,7 @@ namespace margelo::nitro::yolo {
     // Methods
     double sum(double num1, double num2) override;
     void loadModel(const std::string& modelPath) override;
+    std::string frameToBase64(const std::shared_ptr<margelo::nitro::camera::HybridFrameSpec>& frame) override;
 
   private:
     jni::global_ref<JHybridYoloSpec::JavaPart> _javaPart;

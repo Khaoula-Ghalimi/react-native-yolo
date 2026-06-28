@@ -12,6 +12,9 @@ import java.nio.channels.FileChannel
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.support.common.FileUtil
 import yolo.com.loader.YoloModelLoader
+import com.margelo.nitro.camera.HybridFrameSpec
+
+
 
 class HybridYolo : HybridYoloSpec() {
     private var interpreter: Interpreter? = null
@@ -37,6 +40,9 @@ class HybridYolo : HybridYoloSpec() {
         } catch (e: Exception) {
             Log.e("YOLO_TAG", "❌ Failed to load model: ${e.message}", e)
         }
+    }
+    override fun frameToBase64(frame: HybridFrameSpec): String {
+        return "HELLO"
     }
 
 }

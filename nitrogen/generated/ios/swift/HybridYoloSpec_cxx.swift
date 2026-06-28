@@ -6,6 +6,7 @@
 ///
 
 import NitroModules
+import VisionCamera
 
 /**
  * A class implementation that bridges HybridYoloSpec over to C++.
@@ -144,6 +145,22 @@ open class HybridYoloSpec_cxx {
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
       return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func frameToBase64(frame: bridge.std__shared_ptr_margelo__nitro__camera__HybridFrameSpec_) -> bridge.Result_std__string_ {
+    do {
+      let __result = try self.__implementation.frameToBase64(frame: { () -> any HybridFrameSpec in
+        let __unsafePointer = bridge.get_std__shared_ptr_margelo__nitro__camera__HybridFrameSpec_(frame)
+        let __instance = HybridFrameSpec_cxx.fromUnsafe(__unsafePointer)
+        return __instance.getHybridFrameSpec()
+      }())
+      let __resultCpp = std.string(__result)
+      return bridge.create_Result_std__string_(__resultCpp)
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_std__string_(__exceptionPtr)
     }
   }
 }

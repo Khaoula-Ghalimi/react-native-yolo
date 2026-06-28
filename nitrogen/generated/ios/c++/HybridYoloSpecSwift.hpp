@@ -12,9 +12,12 @@
 // Forward declaration of `HybridYoloSpec_cxx` to properly resolve imports.
 namespace Yolo { class HybridYoloSpec_cxx; }
 
-
+// Forward declaration of `HybridFrameSpec` to properly resolve imports.
+namespace margelo::nitro::camera { class HybridFrameSpec; }
 
 #include <string>
+#include <memory>
+#include <VisionCamera/HybridFrameSpec.hpp>
 
 #include "Yolo-Swift-Cxx-Umbrella.hpp"
 
@@ -79,6 +82,14 @@ namespace margelo::nitro::yolo {
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
+    }
+    inline std::string frameToBase64(const std::shared_ptr<margelo::nitro::camera::HybridFrameSpec>& frame) override {
+      auto __result = _swiftPart.frameToBase64(frame);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
     }
 
   private:

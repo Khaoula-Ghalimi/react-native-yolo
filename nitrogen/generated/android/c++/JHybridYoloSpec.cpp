@@ -7,9 +7,13 @@
 
 #include "JHybridYoloSpec.hpp"
 
-
+// Forward declaration of `HybridFrameSpec` to properly resolve imports.
+namespace margelo::nitro::camera { class HybridFrameSpec; }
 
 #include <string>
+#include <memory>
+#include <VisionCamera/HybridFrameSpec.hpp>
+#include <VisionCamera/JHybridFrameSpec.hpp>
 
 namespace margelo::nitro::yolo {
 
@@ -52,6 +56,11 @@ namespace margelo::nitro::yolo {
   void JHybridYoloSpec::loadModel(const std::string& modelPath) {
     static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* modelPath */)>("loadModel");
     method(_javaPart, jni::make_jstring(modelPath));
+  }
+  std::string JHybridYoloSpec::frameToBase64(const std::shared_ptr<margelo::nitro::camera::HybridFrameSpec>& frame) {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<jni::local_ref<jni::JString>(jni::alias_ref<margelo::nitro::camera::JHybridFrameSpec::JavaPart> /* frame */)>("frameToBase64");
+    auto __result = method(_javaPart, std::dynamic_pointer_cast<margelo::nitro::camera::JHybridFrameSpec>(frame)->getJavaPart());
+    return __result->toStdString();
   }
 
 } // namespace margelo::nitro::yolo

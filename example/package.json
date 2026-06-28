@@ -1,38 +1,52 @@
 {
-  "name": "react-native-yolo-example",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "android": "react-native run-android",
-    "android:release": "react-native run-android --mode release",
-    "ios": "react-native run-ios --simulator='iPhone 16'",
-    "lint": "eslint .",
-    "start": "react-native start --reset-cache",
-    "test": "jest",
-    "pod": "bundle install && bundle exec pod install --project-directory=ios"
-  },
+  "name": "exampleexpo",
+  "main": "expo-router/entry",
+  "version": "1.0.0",
   "dependencies": {
-    "react": "19.2.3",
-    "react-native": "0.84.1",
-    "@react-native/new-app-screen": "0.84.1",
-    "react-native-safe-area-context": "^5.5.2",
-    "react-native-nitro-modules": "0.35.9"
+    "@expo/ui": "~56.0.18",
+    "babel-preset-expo": "^56.0.15",
+    "expo": "~56.0.12",
+    "expo-constants": "~56.0.18",
+    "expo-dev-client": "~56.0.20",
+    "expo-device": "~56.0.4",
+    "expo-font": "~56.0.7",
+    "expo-glass-effect": "~56.0.4",
+    "expo-image": "~56.0.11",
+    "expo-linking": "~56.0.14",
+    "expo-router": "~56.2.11",
+    "expo-splash-screen": "~56.0.10",
+    "expo-status-bar": "~56.0.4",
+    "expo-symbols": "~56.0.6",
+    "expo-system-ui": "~56.0.5",
+    "expo-web-browser": "~56.0.5",
+    "react": "file:../node_modules/react",
+    "react-dom": "19.2.0",
+    "react-native": "file:../node_modules/react-native",
+    "react-native-gesture-handler": "~2.31.1",
+    "react-native-nitro-image": "file:../node_modules/react-native-nitro-image",
+    "react-native-nitro-modules": "file:../node_modules/react-native-nitro-modules",
+    "react-native-reanimated": "file:../node_modules/react-native-reanimated",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "4.25.2",
+    "react-native-vision-camera": "file:../node_modules/react-native-vision-camera",
+    "react-native-vision-camera-worklets": "file:../node_modules/react-native-vision-camera-worklets",
+    "react-native-web": "~0.21.0",
+    "react-native-worklets": "file:../node_modules/react-native-worklets",
+    "react-native-yolo": "file:.."
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/preset-env": "^7.25.3",
-    "@babel/runtime": "^7.25.0",
-    "@react-native-community/cli": "20.1.0",
-    "@react-native-community/cli-platform-android": "20.1.0",
-    "@react-native-community/cli-platform-ios": "20.1.0",
-    "@react-native/babel-preset": "0.84.1",
-    "@react-native/eslint-config": "0.84.1",
-    "@react-native/metro-config": "0.84.1",
-    "@react-native/typescript-config": "0.84.1",
-    "@types/jest": "^29.5.13",
-    "babel-plugin-module-resolver": "^5.0.2"
+    "@babel/core": "^7.29.7",
+    "@babel/runtime": "^7.29.7",
+    "@types/react": "~19.2.2",
+    "typescript": "~6.0.3"
   },
-  "engines": {
-    "node": ">= 22.11.0"
-  }
+  "scripts": {
+    "start": "expo start",
+    "reset-project": "node ./scripts/reset-project.js",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "lint": "expo lint"
+  },
+  "private": true
 }

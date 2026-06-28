@@ -13,9 +13,12 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-
+// Forward declaration of `HybridFrameSpec` to properly resolve imports.
+namespace margelo::nitro::camera { class HybridFrameSpec; }
 
 #include <string>
+#include <memory>
+#include <VisionCamera/HybridFrameSpec.hpp>
 
 namespace margelo::nitro::yolo {
 
@@ -50,6 +53,7 @@ namespace margelo::nitro::yolo {
       // Methods
       virtual double sum(double num1, double num2) = 0;
       virtual void loadModel(const std::string& modelPath) = 0;
+      virtual std::string frameToBase64(const std::shared_ptr<margelo::nitro::camera::HybridFrameSpec>& frame) = 0;
 
     protected:
       // Hybrid Setup

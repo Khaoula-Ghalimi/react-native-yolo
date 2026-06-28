@@ -10,6 +10,7 @@ package com.margelo.nitro.yolo
 import androidx.annotation.Keep
 import com.facebook.jni.HybridData
 import com.facebook.proguard.annotations.DoNotStrip
+import com.margelo.nitro.camera.HybridFrameSpec
 import com.margelo.nitro.core.HybridObject
 
 /**
@@ -35,6 +36,10 @@ abstract class HybridYoloSpec: HybridObject() {
   @DoNotStrip
   @Keep
   abstract fun loadModel(modelPath: String): Unit
+  
+  @DoNotStrip
+  @Keep
+  abstract fun frameToBase64(frame: com.margelo.nitro.camera.HybridFrameSpec): String
 
   // Default implementation of `HybridObject.toString()`
   override fun toString(): String {
