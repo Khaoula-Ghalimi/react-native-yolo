@@ -8,6 +8,7 @@
 #include "Yolo-Swift-Cxx-Bridge.hpp"
 
 // Include C++ implementation defined types
+#include "HybridYoloModelSpecSwift.hpp"
 #include "HybridYoloSpecSwift.hpp"
 #include "Yolo-Swift-Cxx-Umbrella.hpp"
 #include <NitroModules/NitroDefines.hpp>
@@ -23,6 +24,22 @@ namespace margelo::nitro::yolo::bridge::swift {
   void* NON_NULL get_std__shared_ptr_margelo__nitro__camera__HybridFrameSpec_(std__shared_ptr_margelo__nitro__camera__HybridFrameSpec_ cppType) {
     // Implemented in VisionCamera
     return margelo::nitro::camera::bridge::swift::get_std__shared_ptr_HybridFrameSpec_(cppType);
+  }
+  
+  // pragma MARK: std::shared_ptr<HybridYoloModelSpec>
+  std::shared_ptr<HybridYoloModelSpec> create_std__shared_ptr_HybridYoloModelSpec_(void* NON_NULL swiftUnsafePointer) noexcept {
+    Yolo::HybridYoloModelSpec_cxx swiftPart = Yolo::HybridYoloModelSpec_cxx::fromUnsafe(swiftUnsafePointer);
+    return std::make_shared<margelo::nitro::yolo::HybridYoloModelSpecSwift>(swiftPart);
+  }
+  void* NON_NULL get_std__shared_ptr_HybridYoloModelSpec_(std__shared_ptr_HybridYoloModelSpec_ cppType) {
+    std::shared_ptr<margelo::nitro::yolo::HybridYoloModelSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::yolo::HybridYoloModelSpecSwift>(cppType);
+    #ifdef NITRO_DEBUG
+    if (swiftWrapper == nullptr) [[unlikely]] {
+      throw std::runtime_error("Class \"HybridYoloModelSpec\" is not implemented in Swift!");
+    }
+    #endif
+    Yolo::HybridYoloModelSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
+    return swiftPart.toUnsafe();
   }
   
   // pragma MARK: std::shared_ptr<HybridYoloSpec>

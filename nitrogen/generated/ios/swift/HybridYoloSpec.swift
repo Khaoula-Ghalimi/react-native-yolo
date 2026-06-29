@@ -14,10 +14,8 @@ public protocol HybridYoloSpec_protocol: HybridObject {
   
 
   // Methods
-  func sum(num1: Double, num2: Double) throws -> Double
-  func loadModel(modelPath: String) throws -> Void
+  func loadModel(modelPath: String) throws -> (any HybridYoloModelSpec)
   func frameToBase64(frame: (any HybridFrameSpec)) throws -> String
-  func detect(frame: (any HybridFrameSpec)) throws -> [Detection]
 }
 
 public extension HybridYoloSpec_protocol {

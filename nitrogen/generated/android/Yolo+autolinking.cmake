@@ -33,8 +33,10 @@ target_sources(
   # Autolinking Setup
   ../nitrogen/generated/android/YoloOnLoad.cpp
   # Shared Nitrogen C++ sources
+  ../nitrogen/generated/shared/c++/HybridYoloModelSpec.cpp
   ../nitrogen/generated/shared/c++/HybridYoloSpec.cpp
   # Android-specific Nitrogen C++ sources
+  ../nitrogen/generated/android/c++/JHybridYoloModelSpec.cpp
   ../nitrogen/generated/android/c++/JHybridYoloSpec.cpp
 )
 

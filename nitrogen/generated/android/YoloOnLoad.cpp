@@ -15,6 +15,7 @@
 #include <fbjni/fbjni.h>
 #include <NitroModules/HybridObjectRegistry.hpp>
 
+#include "JHybridYoloModelSpec.hpp"
 #include "JHybridYoloSpec.hpp"
 #include <NitroModules/DefaultConstructableObject.hpp>
 
@@ -40,6 +41,7 @@ void registerAllNatives() {
   using namespace margelo::nitro::yolo;
 
   // Register native JNI methods
+  margelo::nitro::yolo::JHybridYoloModelSpec::CxxPart::registerNatives();
   margelo::nitro::yolo::JHybridYoloSpec::CxxPart::registerNatives();
 
   // Register Nitro Hybrid Objects

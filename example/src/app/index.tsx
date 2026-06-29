@@ -12,7 +12,8 @@ import {
   useCameraPermission,
   useFrameOutput,
 } from 'react-native-vision-camera'
-import { Yolo, Detection } from 'react-native-yolo'
+import { Yolo } from 'react-native-yolo'
+import type { Detection, YoloModel } from 'react-native-yolo'
 import { runOnJS } from 'react-native-worklets'
 
 const MODEL_SIZE = 640
@@ -21,6 +22,16 @@ export default function HomeScreen() {
   const device = useCameraDevice('back')
   const { hasPermission, requestPermission } = useCameraPermission()
   const { width: screenW, height: screenH } = useWindowDimensions()
+  const modelRef = useRef<YoloModel | null>(null)
+
+  useEffect(() => {
+    modelRef.current = Yolo.loadModel(require('@/assets/models/yolo.tflite'))
+
+    return () => {
+      modelRef.current?.close()
+      modelRef.current = null
+    }
+  }, [])
 
   const [detections, setDetections] = useState<Detection[]>([])
   const [previewUri, setPreviewUri] = useState<string | null>(null)
@@ -46,18 +57,29 @@ export default function HomeScreen() {
     onFrame(frame) {
       'worklet'
 
+      // const now = Date.now()
+
+      // if (now - lastUpdateRef.current > 300) {
+      //   lastUpdateRef.current = now
+
+      //   const b64 = Yolo.frameToBase64(frame)
+      //   const nextDetections = Yolo.detect(frame)
+
+      //   if (b64.length > 0) {
+      //     runOnJS(updatePreview)(b64)
+      //   }
+      // }
+
       const now = Date.now()
 
       if (now - lastUpdateRef.current > 300) {
         lastUpdateRef.current = now
 
-        const b64 = Yolo.frameToBase64(frame)
-        const nextDetections = Yolo.detect(frame)
+        const model = modelRef.current
 
-        runOnJS(updateDetections)(nextDetections)
-
-        if (b64.length > 0) {
-          runOnJS(updatePreview)(b64)
+        if (model != null) {
+          const nextDetections = model.detect(frame)
+          runOnJS(updateDetections)(nextDetections)
         }
       }
 

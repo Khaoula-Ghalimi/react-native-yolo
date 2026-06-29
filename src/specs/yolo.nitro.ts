@@ -13,12 +13,21 @@ export type BoundingBox = {
   y2: number
 }
 
+export interface YoloModel extends HybridObject<{
+  ios: 'swift'
+  android: 'kotlin'
+}> {
+  detect(frame: Frame): Detection[]
+  close(): void
+
+}
+
 export interface Yolo extends HybridObject<{
   ios: 'swift'
   android: 'kotlin'
 }> {
-  sum(num1: number, num2: number): number
-  loadModel(modelPath: string): void
+  loadModel(modelPath: string): YoloModel
   frameToBase64(frame: Frame): string
-  detect(frame: Frame): Detection[]
 }
+
+
