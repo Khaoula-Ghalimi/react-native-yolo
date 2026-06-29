@@ -7,10 +7,19 @@
 
 #include "JHybridYoloSpec.hpp"
 
+// Forward declaration of `Detection` to properly resolve imports.
+namespace margelo::nitro::yolo { struct Detection; }
+// Forward declaration of `BoundingBox` to properly resolve imports.
+namespace margelo::nitro::yolo { struct BoundingBox; }
 // Forward declaration of `HybridFrameSpec` to properly resolve imports.
 namespace margelo::nitro::camera { class HybridFrameSpec; }
 
 #include <string>
+#include "Detection.hpp"
+#include <vector>
+#include "JDetection.hpp"
+#include "BoundingBox.hpp"
+#include "JBoundingBox.hpp"
 #include <memory>
 #include <VisionCamera/HybridFrameSpec.hpp>
 #include <VisionCamera/JHybridFrameSpec.hpp>
@@ -61,6 +70,20 @@ namespace margelo::nitro::yolo {
     static const auto method = _javaPart->javaClassStatic()->getMethod<jni::local_ref<jni::JString>(jni::alias_ref<margelo::nitro::camera::JHybridFrameSpec::JavaPart> /* frame */)>("frameToBase64");
     auto __result = method(_javaPart, std::dynamic_pointer_cast<margelo::nitro::camera::JHybridFrameSpec>(frame)->getJavaPart());
     return __result->toStdString();
+  }
+  std::vector<Detection> JHybridYoloSpec::detect(const std::shared_ptr<margelo::nitro::camera::HybridFrameSpec>& frame) {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<jni::local_ref<jni::JArrayClass<JDetection>>(jni::alias_ref<margelo::nitro::camera::JHybridFrameSpec::JavaPart> /* frame */)>("detect");
+    auto __result = method(_javaPart, std::dynamic_pointer_cast<margelo::nitro::camera::JHybridFrameSpec>(frame)->getJavaPart());
+    return [&](auto&& __input) {
+      size_t __size = __input->size();
+      std::vector<Detection> __vector;
+      __vector.reserve(__size);
+      for (size_t __i = 0; __i < __size; __i++) {
+        auto __element = __input->getElement(__i);
+        __vector.push_back(__element->toCpp());
+      }
+      return __vector;
+    }(__result);
   }
 
 } // namespace margelo::nitro::yolo

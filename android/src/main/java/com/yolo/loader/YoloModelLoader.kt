@@ -10,6 +10,12 @@ import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
 import org.tensorflow.lite.support.common.FileUtil
 
+import org.tensorflow.lite.DataType
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
+import kotlin.math.roundToInt
+import org.tensorflow.lite.Interpreter
+
 
 
 /**
@@ -126,5 +132,30 @@ class YoloModelLoader {
         Log.d(TAG, "Downloaded model size: ${file.length()} bytes")
 
         return file
+    }
+
+
+    fun makeInputBuffer(interpreter: Interpreter): ByteBuffer {
+        val inputTensor = interpreter.getInputTensor(0)
+        val shape = inputTensor.shape() // usually [1, 640, 640, 3]
+        val dataType = inputTensor.dataType()
+
+        val batch = shape[0]
+        val height = shape[1]
+        val width = shape[2]
+        val channels = shape[3]
+
+        require(batch == 1)
+        require(channels == 3)
+
+        val bytesPerValue = when (dataType) {
+            DataType.FLOAT32 -> 4
+            DataType.UINT8 -> 1
+            else -> error("Unsupported input type: $dataType")
+        }
+
+        return ByteBuffer
+            .allocateDirect(batch * width * height * channels * bytesPerValue)
+            .order(ByteOrder.nativeOrder())
     }
 }

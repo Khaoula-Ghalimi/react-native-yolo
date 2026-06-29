@@ -40,6 +40,10 @@ abstract class HybridYoloSpec: HybridObject() {
   @DoNotStrip
   @Keep
   abstract fun frameToBase64(frame: com.margelo.nitro.camera.HybridFrameSpec): String
+  
+  @DoNotStrip
+  @Keep
+  abstract fun detect(frame: com.margelo.nitro.camera.HybridFrameSpec): Array<Detection>
 
   // Default implementation of `HybridObject.toString()`
   override fun toString(): String {

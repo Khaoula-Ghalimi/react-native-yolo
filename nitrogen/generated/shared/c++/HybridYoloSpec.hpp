@@ -15,10 +15,14 @@
 
 // Forward declaration of `HybridFrameSpec` to properly resolve imports.
 namespace margelo::nitro::camera { class HybridFrameSpec; }
+// Forward declaration of `Detection` to properly resolve imports.
+namespace margelo::nitro::yolo { struct Detection; }
 
 #include <string>
 #include <memory>
 #include <VisionCamera/HybridFrameSpec.hpp>
+#include "Detection.hpp"
+#include <vector>
 
 namespace margelo::nitro::yolo {
 
@@ -54,6 +58,7 @@ namespace margelo::nitro::yolo {
       virtual double sum(double num1, double num2) = 0;
       virtual void loadModel(const std::string& modelPath) = 0;
       virtual std::string frameToBase64(const std::shared_ptr<margelo::nitro::camera::HybridFrameSpec>& frame) = 0;
+      virtual std::vector<Detection> detect(const std::shared_ptr<margelo::nitro::camera::HybridFrameSpec>& frame) = 0;
 
     protected:
       // Hybrid Setup

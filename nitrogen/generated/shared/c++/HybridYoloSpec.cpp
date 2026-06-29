@@ -17,6 +17,7 @@ namespace margelo::nitro::yolo {
       prototype.registerHybridMethod("sum", &HybridYoloSpec::sum);
       prototype.registerHybridMethod("loadModel", &HybridYoloSpec::loadModel);
       prototype.registerHybridMethod("frameToBase64", &HybridYoloSpec::frameToBase64);
+      prototype.registerHybridMethod("detect", &HybridYoloSpec::detect);
     });
   }
 

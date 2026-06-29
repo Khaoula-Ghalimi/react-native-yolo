@@ -18,6 +18,13 @@ config.resolver.nodeModulesPaths = [
 // Allow Metro to resolve packages from both locations.
 config.resolver.disableHierarchicalLookup = false
 
+config.resolver.assetExts = [
+  ...config.resolver.assetExts,
+  'tflite',
+  'onnx',
+  'txt',
+]
+
 config.transformer = {
   ...config.transformer,
   getTransformOptions: async () => ({

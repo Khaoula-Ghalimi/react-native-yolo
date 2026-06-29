@@ -8,6 +8,10 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `BoundingBox` to properly resolve imports.
+namespace margelo::nitro::yolo { struct BoundingBox; }
+// Forward declaration of `Detection` to properly resolve imports.
+namespace margelo::nitro::yolo { struct Detection; }
 // Forward declaration of `HybridFrameSpec` to properly resolve imports.
 namespace margelo::nitro::camera { class HybridFrameSpec; }
 // Forward declaration of `HybridYoloSpec` to properly resolve imports.
@@ -20,12 +24,15 @@ namespace VisionCamera { class HybridFrameSpec_cxx; }
 namespace Yolo { class HybridYoloSpec_cxx; }
 
 // Include C++ defined types
+#include "BoundingBox.hpp"
+#include "Detection.hpp"
 #include "HybridYoloSpec.hpp"
 #include <NitroModules/Result.hpp>
 #include <VisionCamera/HybridFrameSpec.hpp>
 #include <exception>
 #include <memory>
 #include <string>
+#include <vector>
 
 /**
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
@@ -44,6 +51,17 @@ namespace margelo::nitro::yolo::bridge::swift {
   // pragma MARK: std::weak_ptr<margelo::nitro::camera::HybridFrameSpec>
   using std__weak_ptr_margelo__nitro__camera__HybridFrameSpec_ = std::weak_ptr<margelo::nitro::camera::HybridFrameSpec>;
   inline std__weak_ptr_margelo__nitro__camera__HybridFrameSpec_ weakify_std__shared_ptr_margelo__nitro__camera__HybridFrameSpec_(const std::shared_ptr<margelo::nitro::camera::HybridFrameSpec>& strong) noexcept { return strong; }
+  
+  // pragma MARK: std::vector<Detection>
+  /**
+   * Specialized version of `std::vector<Detection>`.
+   */
+  using std__vector_Detection_ = std::vector<Detection>;
+  inline std::vector<Detection> create_std__vector_Detection_(size_t size) noexcept {
+    std::vector<Detection> vector;
+    vector.reserve(size);
+    return vector;
+  }
   
   // pragma MARK: std::shared_ptr<HybridYoloSpec>
   /**
@@ -82,6 +100,15 @@ namespace margelo::nitro::yolo::bridge::swift {
   }
   inline Result_std__string_ create_Result_std__string_(const std::exception_ptr& error) noexcept {
     return Result<std::string>::withError(error);
+  }
+  
+  // pragma MARK: Result<std::vector<Detection>>
+  using Result_std__vector_Detection__ = Result<std::vector<Detection>>;
+  inline Result_std__vector_Detection__ create_Result_std__vector_Detection__(const std::vector<Detection>& value) noexcept {
+    return Result<std::vector<Detection>>::withValue(value);
+  }
+  inline Result_std__vector_Detection__ create_Result_std__vector_Detection__(const std::exception_ptr& error) noexcept {
+    return Result<std::vector<Detection>>::withError(error);
   }
 
 } // namespace margelo::nitro::yolo::bridge::swift

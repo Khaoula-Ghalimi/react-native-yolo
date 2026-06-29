@@ -8,18 +8,25 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `BoundingBox` to properly resolve imports.
+namespace margelo::nitro::yolo { struct BoundingBox; }
+// Forward declaration of `Detection` to properly resolve imports.
+namespace margelo::nitro::yolo { struct Detection; }
 // Forward declaration of `HybridFrameSpec` to properly resolve imports.
 namespace margelo::nitro::camera { class HybridFrameSpec; }
 // Forward declaration of `HybridYoloSpec` to properly resolve imports.
 namespace margelo::nitro::yolo { class HybridYoloSpec; }
 
 // Include C++ defined types
+#include "BoundingBox.hpp"
+#include "Detection.hpp"
 #include "HybridYoloSpec.hpp"
 #include <NitroModules/Result.hpp>
 #include <VisionCamera/HybridFrameSpec.hpp>
 #include <exception>
 #include <memory>
 #include <string>
+#include <vector>
 
 // C++ helpers for Swift
 #include "Yolo-Swift-Cxx-Bridge.hpp"
