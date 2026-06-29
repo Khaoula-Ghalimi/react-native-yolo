@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import com.margelo.nitro.camera.HybridFrameSpec
+import com.margelo.nitro.camera.CameraOrientation
 import java.io.ByteArrayOutputStream
 
 
@@ -20,7 +21,13 @@ object BitmapOrientationFixer {
       jpegBytes.size
     ) ?: return jpegBytes
 
-    val rotationDegrees = 90f //TODO: Get the actual rotation degrees from the frame metadata if available
+    val rotationDegrees = when (frame.orientation) {
+      CameraOrientation.LEFT -> 90f
+      CameraOrientation.RIGHT -> 270f
+      CameraOrientation.UP -> 0f
+      CameraOrientation.DOWN -> 180f
+      else -> 0f
+    }
 
     val matrix = Matrix().apply {
       postRotate(rotationDegrees)

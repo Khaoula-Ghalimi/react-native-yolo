@@ -20,15 +20,20 @@ class HybridYolo : HybridYoloSpec() {
         return HybridYoloModel(modelPath)
     }
     override fun frameToBase64(frame: HybridFrameSpec): String {
+        Log.d(TAG, "Trying to convert frame to base64")
         return try {
+            Log.d(TAG, "frameToBase64: frame: $frame")
             if (!FrameValidator.isValidYuv(frame)) return ""
+            Log.d(TAG, "frameToBase64: frame is valid YUV")
 
             val jpegBytes = FrameJpegConverter.toJpegBytes(
             frame = frame,
             quality = 80
             )
+            Log.d(TAG, "frameToBase64: jpegBytes size: ${jpegBytes.size}")
 
             Base64.encodeToString(jpegBytes, Base64.NO_WRAP)
+            
         } catch (e: Exception) {
             Log.e(TAG, "❌ frameToBase64 failed", e)
             ""

@@ -44,6 +44,10 @@ export default function HomeScreen() {
     if (!mountedRef.current || !b64String) return
     setPreviewUri(`data:image/jpeg;base64,${b64String}`)
   }, [])
+  const processFrameOnJS = useCallback((frame: any) => {
+    const b64 = Yolo.frameToBase64(frame)
+    updatePreview(b64)
+  }, [updatePreview])
 
   const updateDetections = useCallback((next: Detection[]) => {
     if (!mountedRef.current) return
@@ -74,6 +78,8 @@ export default function HomeScreen() {
 
       if (now - lastUpdateRef.current > 300) {
         lastUpdateRef.current = now
+
+        runOnJS(processFrameOnJS)(frame)
 
         const model = modelRef.current
 
@@ -159,7 +165,7 @@ export default function HomeScreen() {
         })}
       </View>
 
-      {/* <View style={styles.previewContainer}>
+      <View style={styles.previewContainer}>
         <Text style={styles.previewText}>
           YOLO Frame Orientation Preview: {detections.length}
         </Text>
@@ -171,7 +177,7 @@ export default function HomeScreen() {
             <Text style={styles.placeholderText}>Waiting for frame...</Text>
           </View>
         )}
-      </View> */}
+      </View>
     </View>
   )
 }
