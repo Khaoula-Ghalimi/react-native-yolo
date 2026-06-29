@@ -14,6 +14,11 @@ import org.tensorflow.lite.support.common.FileUtil
 import yolo.com.loader.YoloModelLoader
 import com.margelo.nitro.camera.HybridFrameSpec
 
+import android.util.Base64
+import com.yolo.utils.FrameJpegConverter
+import com.yolo.utils.FrameValidator
+
+
 
 
 class HybridYolo : HybridYoloSpec() {
@@ -42,7 +47,19 @@ class HybridYolo : HybridYoloSpec() {
         }
     }
     override fun frameToBase64(frame: HybridFrameSpec): String {
-        return "HELLO"
+        return try {
+            if (!FrameValidator.isValidYuv(frame)) return ""
+
+            val jpegBytes = FrameJpegConverter.toJpegBytes(
+            frame = frame,
+            quality = 80
+            )
+
+            Base64.encodeToString(jpegBytes, Base64.NO_WRAP)
+        } catch (e: Exception) {
+            Log.e("YOLO_TAG", "❌ frameToBase64 failed", e)
+            ""
+        }
     }
 
 }
