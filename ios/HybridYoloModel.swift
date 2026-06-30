@@ -143,8 +143,13 @@ public class HybridYoloModel: HybridYoloModelSpec {
         
         // Extraction du CVPixelBuffer matériel pour un accès direct ultra-rapide
         let nativeBuffer = try frame.getNativeBuffer()
-        guard let rawPointer = nativeBuffer.pointer else { return }
-        let pixelBuffer = Unmanaged<CVPixelBuffer>.fromOpaque(rawPointer).takeUnretainedValue()
+        guard let rawPointer = UnsafeRawPointer(bitPattern: UInt(nativeBuffer.pointer)) else {
+            return
+        }
+
+        let pixelBuffer = Unmanaged<CVPixelBuffer>
+            .fromOpaque(rawPointer)
+            .takeUnretainedValue()
         
         CVPixelBufferLockBaseAddress(pixelBuffer, .readOnly)
         defer { CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly) }
@@ -184,13 +189,17 @@ public class HybridYoloModel: HybridYoloModelSpec {
                 let v = Int(uvPtr[uvIndex + 1]) // V se trouve juste à côté
                 
                 // Formule standard de conversion YUV en RGB
-                let rFloat = Float(y) + 1.402 * Float(v - 128)
-                let gFloat = Float(y) - 0.344136 * Float(u - 128) - 0.714136 * Float(v - 128)
-                let bFloat = Float(y) + 1.772 * Float(u - 128)
+                let yf = Float(y)
+                let uf = Float(u - 128)
+                let vf = Float(v - 128)
+
+                let rFloat = yf + (1.402 * vf)
+                let gFloat = yf - (0.344136 * uf) - (0.714136 * vf)
+                let bFloat = yf + (1.772 * uf)
                 
-                let r = Int(rFloat.rounded()).clamped(to: 0...255)
-                let g = Int(gFloat.rounded()).clamped(to: 0...255)
-                let b = Int(bFloat.rounded()).clamped(to: 0...255)
+                let r = clampInt(Int(rFloat.rounded()), 0, 255)
+                let g = clampInt(Int(gFloat.rounded()), 0, 255)
+                let b = clampInt(Int(bFloat.rounded()), 0, 255)
                 
                 if dataType == .float32 {
                     let rNorm = Float(r) / 255.0
@@ -229,22 +238,26 @@ public class HybridYoloModel: HybridYoloModelSpec {
         case .up:
             let sx = Int(nx * Float(srcWidth))
             let sy = Int(ny * Float(srcHeight))
-            return (sx.clamped(to: 0...(srcWidth - 1)), sy.clamped(to: 0...(srcHeight - 1)))
+            return (clampInt(sx, 0, srcWidth - 1), clampInt(sy, 0, srcHeight - 1))
         case .down:
             let sx = Int((1.0 - nx) * Float(srcWidth))
             let sy = Int((1.0 - ny) * Float(srcHeight))
-            return (sx.clamped(to: 0...(srcWidth - 1)), sy.clamped(to: 0...(srcHeight - 1)))
+            return (clampInt(sx, 0, srcWidth - 1), clampInt(sy, 0, srcHeight - 1))
         case .left:
             let sx = Int(ny * Float(srcWidth))
             let sy = Int((1.0 - nx) * Float(srcHeight))
-            return (sx.clamped(to: 0...(srcWidth - 1)), sy.clamped(to: 0...(srcHeight - 1)))
+            return (clampInt(sx, 0, srcWidth - 1), clampInt(sy, 0, srcHeight - 1))
         case .right:
             let sx = Int((1.0 - ny) * Float(srcWidth))
             let sy = Int(nx * Float(srcHeight))
-            return (sx.clamped(to: 0...(srcWidth - 1)), sy.clamped(to: 0...(srcHeight - 1)))
+            return (clampInt(sx, 0, srcWidth - 1), clampInt(sy, 0, srcHeight - 1))
         @unknown default:
             return (0, 0)
         }
+    }
+
+    private func clampInt(_ value: Int, _ minValue: Int, _ maxValue: Int) -> Int {
+        return min(max(value, minValue), maxValue)
     }
 }
 
