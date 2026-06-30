@@ -6,7 +6,7 @@ public class HybridYolo: HybridYoloSpec {
     private static let tag = "YOLO_TAG"
     
     // Initialisateur obligatoire pour les modules Nitro
-    public required init() {
+    public required override init() {
         super.init()
     }
     
@@ -14,7 +14,7 @@ public class HybridYolo: HybridYoloSpec {
      * Charge l'objet modèle YOLO spécifié par son chemin.
      * Implémente la méthode obligatoire du protocole Nitro TypeScript.
      */
-    public override func loadModel(modelPath: String) throws -> any HybridYoloModelSpec {
+    public func loadModel(modelPath: String) throws -> any HybridYoloModelSpec {
         NSLog("[%@]: Trying to load model object: %@", HybridYolo.tag, modelPath)
         
         // Initialise et retourne votre sous-classe de modèle Nitro (assurez-vous qu'elle s'appelle bien HybridYoloModel)
@@ -25,7 +25,7 @@ public class HybridYolo: HybridYoloSpec {
      * Valide un Frame de la caméra, le convertit en JPEG permanent (NV12 -> JPEG -> Fix Rotation),
      * puis l'encode instantanément en chaîne de caractères Base64 standard.
      */
-    public override func frameToBase64(frame: any HybridFrameSpec) throws -> String {
+    public func frameToBase64(frame: any HybridFrameSpec) throws -> String {
         NSLog("[%@]: Trying to convert frame to base64", HybridYolo.tag)
         
         do {

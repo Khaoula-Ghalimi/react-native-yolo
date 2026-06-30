@@ -17,7 +17,7 @@ public class HybridYoloModel: HybridYoloModelSpec {
     
     private let threadLock = NSLock()
     
-    public required init(modelPath: String) throws {
+    public required override init(modelPath: String) throws {
         super.init()
         try load(modelPath: modelPath)
     }
@@ -51,7 +51,7 @@ public class HybridYoloModel: HybridYoloModelSpec {
         }
     }
     
-    public override func detect(frame: any HybridFrameSpec) throws -> [Detection] {
+    public func detect(frame: any HybridFrameSpec) throws -> [Detection] {
         guard let localInterpreter = interpreter else {
             NSLog("[%@]: ❌ This model instance is not loaded.", HybridYoloModel.tag)
             return []
@@ -92,7 +92,7 @@ public class HybridYoloModel: HybridYoloModelSpec {
         return parseNmsOutput(outputArray: nativeOutputs, confidenceThreshold: 0.5)
     }
     
-    public override func close() throws {
+    public func close() throws {
         interpreter = nil
         inputBuffer = nil
         NSLog("[%@]: 🧹 YOLO model disposed", HybridYoloModel.tag)
