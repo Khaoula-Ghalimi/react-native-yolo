@@ -121,9 +121,9 @@ public class HybridYoloModel: HybridYoloModelSpec {
             
             detections.append(
                 Detection(
-                    boundingBox: box,
+                    classId: Double(outputArray[offset + 5]),
                     score: Double(score),
-                    classId: Double(outputArray[offset + 5])
+                    boundingBox: box
                 )
             )
         }
