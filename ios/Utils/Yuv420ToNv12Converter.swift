@@ -8,7 +8,9 @@ public enum Yuv420ToNv12Converter {
     public static func convert(frame: any HybridFrameSpec, width: Int, height: Int) -> [UInt8] {
         do {
             let nativeBuffer = try frame.getNativeBuffer()
-            guard let rawPointer = nativeBuffer.pointer else { return [] }
+            guard let rawPointer = UnsafeRawPointer(bitPattern: UInt(nativeBuffer.pointer)) else {
+                return []
+            }
 
             let pixelBuffer = Unmanaged<CVPixelBuffer>
                 .fromOpaque(rawPointer)

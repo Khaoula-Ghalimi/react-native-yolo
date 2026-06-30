@@ -32,8 +32,8 @@ public class HybridYoloModel: HybridYoloModelSpec {
             
             try localInterpreter.allocateTensors()
             
-            let inputTensor = try localInterpreter.inputTensor(at: 0)
-            let outputTensor = try localInterpreter.outputTensor(at: 0)
+            let inputTensor = try localInterpreter.input(at: 0)
+            let outputTensor = try localInterpreter.output(at: 0)
             
             let shape = inputTensor.shape.dimensions
             
@@ -81,7 +81,7 @@ public class HybridYoloModel: HybridYoloModelSpec {
         try localInterpreter.invoke()
         
         // Récupération des résultats du tenseur de sortie
-        let outputTensor = try localInterpreter.outputTensor(at: 0)
+        let outputTensor = try localInterpreter.output(at: 0)
         
         // Extraction et conversion de la structure des tenseurs [1, 300, 6] en Float
         let nativeOutputs = outputTensor.data.withUnsafeBytes { (ptr: UnsafeRawBufferPointer) -> [Float] in

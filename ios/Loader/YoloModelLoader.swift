@@ -104,7 +104,7 @@ public class YoloModelLoader {
      */
     public func makeInputBuffer(interpreter: Interpreter) throws -> Data {
         // Récupérer le premier tenseur d'entrée du modèle TFLite
-        let inputTensor = try interpreter.inputTensor(at: 0)
+        let inputTensor = try interpreter.input(at: 0)
         let shape = inputTensor.shape.dimensions // Généralement: [1, 640, 640, 3]
         let dataType = inputTensor.dataType
         
