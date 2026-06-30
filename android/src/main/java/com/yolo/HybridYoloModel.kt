@@ -11,6 +11,7 @@ import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
 import yolo.com.loader.YoloModelLoader
 import kotlin.math.roundToInt
+import com.margelo.nitro.camera.CameraOrientation
 
 class HybridYoloModel(
     modelPath: String
@@ -158,8 +159,15 @@ class HybridYoloModel(
 
         for (dy in 0 until dstHeight) {
             for (dx in 0 until dstWidth) {
-                val srcX = dy * srcWidth / dstHeight
-                val srcY = srcHeight - 1 - (dx * srcHeight / dstWidth)
+                val (srcX, srcY) = mapModelPixelToFramePixel(
+                    dx = dx,
+                    dy = dy,
+                    dstWidth = dstWidth,
+                    dstHeight = dstHeight,
+                    srcWidth = srcWidth,
+                    srcHeight = srcHeight,
+                    orientation = frame.orientation
+                )
 
                 val yIndex = srcY * yRowStride + srcX
 
@@ -208,5 +216,44 @@ class HybridYoloModel(
         }
 
         input.rewind()
+    }
+
+    private fun mapModelPixelToFramePixel(
+        dx: Int,
+        dy: Int,
+        dstWidth: Int,
+        dstHeight: Int,
+        srcWidth: Int,
+        srcHeight: Int,
+        orientation: CameraOrientation
+    ): Pair<Int, Int> {
+        val nx = dx.toFloat() / dstWidth
+        val ny = dy.toFloat() / dstHeight
+
+        return when (orientation) {
+            CameraOrientation.UP -> {
+                val srcX = (nx * srcWidth).toInt()
+                val srcY = (ny * srcHeight).toInt()
+                srcX.coerceIn(0, srcWidth - 1) to srcY.coerceIn(0, srcHeight - 1)
+            }
+
+            CameraOrientation.DOWN -> {
+                val srcX = ((1f - nx) * srcWidth).toInt()
+                val srcY = ((1f - ny) * srcHeight).toInt()
+                srcX.coerceIn(0, srcWidth - 1) to srcY.coerceIn(0, srcHeight - 1)
+            }
+
+            CameraOrientation.LEFT -> {
+                val srcX = (ny * srcWidth).toInt()
+                val srcY = ((1f - nx) * srcHeight).toInt()
+                srcX.coerceIn(0, srcWidth - 1) to srcY.coerceIn(0, srcHeight - 1)
+            }
+
+            CameraOrientation.RIGHT -> {
+                val srcX = ((1f - ny) * srcWidth).toInt()
+                val srcY = (nx * srcHeight).toInt()
+                srcX.coerceIn(0, srcWidth - 1) to srcY.coerceIn(0, srcHeight - 1)
+            }
+        }
     }
 }
