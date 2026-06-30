@@ -1,6 +1,6 @@
 {
   "name": "react-native-yolo",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "react-native-yolo is a react native package built with Nitro",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
