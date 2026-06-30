@@ -17,7 +17,7 @@ public class HybridYoloModel: HybridYoloModelSpec {
     
     private let threadLock = NSLock()
     
-    public required override init(modelPath: String) throws {
+    public required init(modelPath: String) throws {
         super.init()
         try load(modelPath: modelPath)
     }
