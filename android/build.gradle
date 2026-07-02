@@ -139,9 +139,9 @@ dependencies {
   implementation project(":react-native-nitro-modules")
 
   // Add TensorFlow Lite dependencies
-  implementation "com.google.ai.edge.litert:litert:1.4.2"
-  implementation "com.google.ai.edge.litert:litert-support-api:1.4.2"
-  implementation "com.google.ai.edge.litert:litert-gpu:1.4.2"
+  implementation "com.google.ai.edge.litert:litert:2.1.6"
+  implementation "com.google.ai.edge.litert:litert-support-api:2.1.6"
+  implementation "com.google.ai.edge.litert:litert-gpu:2.1.6"
   
   compileOnly project(":react-native-vision-camera")
 }
